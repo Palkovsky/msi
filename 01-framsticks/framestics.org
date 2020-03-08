@@ -15,10 +15,10 @@
   Cechą, która będzie rozwijana w procesie ewolucji będzie ~szybkość poruszania się~.
 
 * Ustawienia symulatora
-  Ustawienia eksperymentu wybrałem takie jak w tutorialu zalinkowanego na moodlu.
-  Istotna jest zakładkaa fitness, w której mówimy algorytmowi aby maksymalizował szybkość poruszania się.
+  Ustawienia eksperymentu wybrałem takie jak w tutorialu zalinkowanym na moodlu.
+  Istotna jest zakładka fitness, w której mówimy algorytmowi aby maksymalizował szybkość poruszania się.
 
-  #+CAPTION: Parameters/Selection
+  #+CAPTION: Experiment/Parameters/Selection
   #+ATTR_LATEX: :width 450px
   [[./imgs/1.png]]
   #+CAPTION: Experiment/Parameters/Fitness
