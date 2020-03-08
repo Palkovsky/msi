@@ -75,13 +75,16 @@
     - ~Experiment/Parameters/Selection/DeleteGenotypes~: *Only the worst*
 
   Takie ustawienie skutuje tym, że z puli genów nie zostaną usunięte najlepsze osobniki.
-  Wadą tego ustawienie jest problem utknięcie w *maksimum lokalnym*, innymi słowy nie przeszukujemy całej przestrzeni możliwości.
+  Wadą tego ustawienia jest problem utknięcia w *maksimum lokalnym*, innymi słowy nie przeszukujemy całej możliwej przestrzeni.
 
   W puli genów pozostają bardzo zbliżone do siebie genotypy.
   Jedynie szczęśliwe mutacje pozwalają na poprawę średniego fitnesu.
   Rozwiązaniem tego problemu jest wybranie innej metody eliminacji genów lub zwiększanie prawdopodobieństw mutacji.
 
-  Przy braku zmian w wartości ~maksymalnej~, wartości ~średnia~ i ~minimalna~ po jakimś czasie zrównują się z wartością maksymalną.
+  Przy braku zmian w wartości ~maksymalnej~, wartości ~średnia~ i ~minimalna~ po jakimś czasie 
+zrównują się z wartością maksymalną.
+
+ Przy innej metodzie eliminacji genotypów, wykresy nie wyglądałby tak gładko, tylko występowałby wiele oscylacji.
 
   #+CAPTION: Minmalna/Średnia/Maksymalna wartość fitnessu w czasie.
   [[./imgs/8.png]]
