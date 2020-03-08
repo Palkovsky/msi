@@ -1,0 +1,87 @@
+#+TITLE: Framsticks - eksperyment ewolucyjny
+#+Author: Dawid Macek
+#+LANGUAGE: pl
+#+OPTIONS: date:2020-03-08
+#+OPTIONS: toc:nil
+#+LATEX_HEADER: \renewcommand*{\contentsname}{Spis treści}
+#+LATEX_HEADER: \usepackage[AUTO]{babel}
+#+LATEX_HEADER: \usepackage[margin=0.7in]{geometry}
+
+* Wstęp
+  Celem ćwiczenia będzie wykonanie eksperymentu polegającego 
+  na uruchomieniu procesu ewolucji ukierunkowanej na rozwój 
+  wybranej cechy za pomocą symulatora Framsticks.
+
+  Cechą, która będzie rozwijana w procesie ewolucji będzie ~szybkość poruszania się~.
+
+* Ustawienia symulatora
+  Ustawienia eksperymentu wybrałem takie jak w tutorialu zalinkowanego na moodlu.
+  Istotna jest zakładkaa fitness, w której mówimy algorytmowi aby maksymalizował szybkość poruszania się.
+
+  #+CAPTION: Parameters/Selection
+  #+ATTR_LATEX: :width 450px
+  [[./imgs/1.png]]
+  #+CAPTION: Experiment/Parameters/Fitness
+  #+ATTR_LATEX: :width 450px
+  [[./imgs/2.png]]
+  #+CAPTION: Experiment/Populations/Creatures
+  #+ATTR_LATEX: :width 450px
+  [[./imgs/3.png]]
+  #+CAPTION: Genetics/f1/Morphology
+  #+ATTR_LATEX: :width 450px
+  [[./imgs/4.png]]
+  #+CAPTION: Genetics/f1/Neuron net
+  #+ATTR_LATEX: :width 450px
+  [[./imgs/5.png]]
+
+#+LATEX: \clearpage
+
+* Osobnik początkowy
+  Osobnik docelowo miał obracać patyczkami po bokach, ale zamiast tego wił się dziwnie.
+
+  Użyłem dwóch generatorów funkcji sinus do sterowania kończnami bocznymi.
+  Szybkość(fitness) początkowego osobnika to: _~0.000863~_
+** Genotyp
+  #+begin_src 
+    (,,(X[|,2:1,p:1]),X[*][Sin,f0:0.01,-1:1][Sin,f0:01,-2:1]X(,X[|,-1:1, p:1]))
+  #+end_src
+
+** Wizualizacja
+  #+CAPTION: Osobnik zero
+  #+ATTR_LATEX: :width 450px
+  [[./imgs/6.png]]
+
+* Osobnik końcowy
+  Osobnik końcowy w porównaniu do pierwszego pozbył się jednej kończyny i wychodował jedną środkową.
+  Za pomocą środkowej kończyny wybyja się on w powietrze, pokonując przy tym pewną odległość.
+  
+  Szybkość(fitness) końcowego osobnika to: _~0.040697~_.
+  Oznacza to, że względem osobnika początkowego szybkość poruszania się wzrosła *47-krotnie*.
+
+** Genotyp
+   #+begin_src 
+   rL(,X,,(FX[|,2:-4.108,p:0.827]),LLX[*][Sin,f0:-0.09,t:1.04][Sin,-2:-10.546,f0:0.0628319]LrCf(,qX))
+   #+end_src
+
+** Wizualizacja
+  #+CAPTION: Osobnik końcowy
+  [[./imgs/7.png]]
+
+
+#+LATEX: \clearpage
+
+* Wykresy i wnisoki
+  'Schodkowy' charakter wartości maksymalnej wynika z ustawienia 
+    - ~Experiment/Parameters/Selection/DeleteGenotypes~: *Only the worst*
+
+  Takie ustawienie skutuje tym, że z puli genów nie zostaną usunięte najlepsze osobniki.
+  Wadą tego ustawienie jest problem utknięcie w *maksimum lokalnym*, innymi słowy nie przeszukujemy całej przestrzeni możliwości.
+
+  W puli genów pozostają bardzo zbliżone do siebie genotypy.
+  Jedynie szczęśliwe mutacje pozwalają na poprawę średniego fitnesu.
+  Rozwiązaniem tego problemu jest wybranie innej metody eliminacji genów lub zwiększanie prawdopodobieństw mutacji.
+
+  Przy braku zmian w wartości ~maksymalnej~, wartości ~średnia~ i ~minimalna~ po jakimś czasie zrównują się z wartością maksymalną.
+
+  #+CAPTION: Minmalna/Średnia/Maksymalna wartość fitnessu w czasie.
+  [[./imgs/8.png]]
