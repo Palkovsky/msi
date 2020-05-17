@@ -1,6 +1,5 @@
 #![allow(dead_code)]
 use std::collections::HashMap;
-
 // Plotlib
 use plotlib::{
     page::Page,
@@ -68,6 +67,7 @@ impl FuzzySet {
         out_file: impl AsRef<std::path::Path>
     ) -> () {
         let mut view = ContinuousView::new()
+            .y_range(0.0, 1.0)
             .x_label(x_label)
             .y_label(y_label);
 
@@ -79,6 +79,46 @@ impl FuzzySet {
         }
 
         Page::single(&view).save(out_file).unwrap();
+    }
+
+    fn cog(
+        &self,
+        term: impl Into<String>
+    ) -> FuzzyResult<f64> {
+        let key = term.into();
+        let points = self.terms.get(&key)
+            .
+            ok_or(FuzzyError::InvalidTerm(key.clone()))?;
+
+        //              / - - -
+        //             /
+        //      - - - /
+        //    /
+        //   /
+        //- -
+        let (mut a, mut b) = (0.0, 0.0);
+        for pair in points.windows(2) {
+            let (x1, y1) = pair[0];
+            let (x2, y2) = pair[1];
+
+            let (x_diff, y_diff) = (x2-x1, (y2-y1).abs());
+
+            // Height of base rectangle.
+            let height = f64::min(y1, y2);
+            println!("HEIGHT: {}", height);
+            // Area of base rectangle + traingle on top.
+            let area = height*x_diff + 0.5*y_diff*x_diff;
+            println!("AREA: {}", area);
+            let centroid = if y_diff == 0.0 {
+                (x1+x2)/2.0
+            } else {
+                (2.0*x1+x2)/3.0
+            };
+            println!("CENTR: {}", centroid);
+            a += area*centroid;
+            b += area;
+        }
+        Ok(a/b)
     }
 
     /// Aplies maximum threshold for given term.
@@ -424,7 +464,7 @@ fn test_fuzzy(
             .term("keep", vec![(2.0, 0.0), (3.0, 0.5), (4.0, 1.0), (6.0, 1.0), (7.0, 0.5), (8.0, 0.0)])?
             .term("vol up", vec![(3.0, 0.0), (6.0, 0.0), (7.0, 0.5), (8.0, 1.0), (10.0, 1.0)])?
     )
-        // Good Moaning
+    // Good Moaning
         .rule(and!("loudness" => "very quiet", "tod" => "morning"; "change" => "vol up"))
         .rule(and!("loudness" => "quiet", "tod" => "morning"; "change" => "keep"))
         .rule(and!("loudness" => "loud", "tod" => "morning"; "change" => "keep"))
@@ -446,16 +486,18 @@ fn test_fuzzy(
         .rule(and!("loudness" => "very loud", "tod" => "night"; "change" => "vol down"));
 
     let mut values = HashMap::new();
-    values.insert("loudness".to_string(), 90.0);
-    values.insert("tod".to_string(), 6.0);
+    values.insert("loudness".to_string(), 50.0);
+    values.insert("tod".to_string(), 12.0);
 
     let sets = fuzzer.apply(&values).unwrap();
     let change_set = sets.get("change").unwrap();
     change_set.plot("X", "Y", "scatter.svg");
+    let cog = change_set.cog("out")?;
 
-    println!("Values: {:?}", values);
-    assert_eq!(fuzzer.apply(&values), Ok(HashMap::new()));
+    println!("=============== COG: {} ===============", cog) ;
+    println!("{:?}", change_set);
 
+    assert!(false);
     Ok(())
 }
 
