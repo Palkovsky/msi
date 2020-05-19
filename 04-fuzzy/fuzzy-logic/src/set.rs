@@ -2,14 +2,6 @@ use std::collections::HashMap;
 
 use super::common::{FuzzyError, FuzzyResult, Term};
 
-// Plotlib
-use plotlib::{
-    page::Page,
-    repr::Plot,
-    view::ContinuousView,
-    style::LineStyle
-};
-
 #[derive(Debug, Clone, PartialEq)]
 pub struct FuzzySet {
     terms: HashMap<Term, Vec<(f64, f64)>>
@@ -50,27 +42,6 @@ impl FuzzySet {
         let key = term.into();
         self.terms.get(&key)
             .ok_or(FuzzyError::InvalidTerm(key.into()))
-    }
-
-    pub fn plot(
-        &self,
-        x_label: impl Into<String>,
-        y_label: impl Into<String>,
-        out_file: impl AsRef<std::path::Path>
-    ) -> () {
-        let mut view = ContinuousView::new()
-            .y_range(0.0, 1.0)
-            .x_label(x_label)
-            .y_label(y_label);
-
-        for (_key, points) in self.terms.iter(){
-            let style = LineStyle::new().colour("#DD3355");
-            let plot = Plot::new(points.to_vec())
-                .line_style(style);
-            view = view.add(plot);
-        }
-
-        Page::single(&view).save(out_file).unwrap();
     }
 
     /// Aplies maximum threshold for given term.
@@ -230,4 +201,26 @@ impl FuzzySet {
         }
         Ok(result)
     }
+}
+
+
+#[macro_export]
+macro_rules! fuzzy {
+    ($($term:expr => $(($x:expr,$y:expr)),* $(,)*);* $(;)*) => {{
+        Result::<$crate::FuzzySet, $crate::FuzzyError>::Ok($crate::FuzzySet::new())
+            $(.and_then(|set| set.term($term, vec![$(($x, $y),)*])))*
+    }}
+}
+
+#[test]
+fn test_fuzzy_macro(
+) -> () {
+    assert_eq!(fuzzy!{
+        "term1" => (1.0, 1.0), (2.0, 2.0);
+        "term2" => (0.0, 0.5)
+    }, Err(FuzzyError::InvalidPoints));
+    assert_eq!(fuzzy!{
+        "term1" => (1.0, 1.0), (0.0, 2.0)
+    }, FuzzySet::new().term("term1", vec![(0.0, 2.0), (1.0, 1.0)]));
+    assert_eq!(fuzzy!{}, Ok(FuzzySet::new()))
 }

@@ -1,4 +1,5 @@
 use super::common::{FuzzyError, FuzzyResult};
+
 ///              / - - -
 ///             /
 ///      - - - /
@@ -19,11 +20,21 @@ pub fn cog(
         let (x_diff, y_diff) = (x2-x1, (y2-y1).abs());
         // Height of base rectangle.
         let height = f64::min(y1, y2);
-        // Area of base rectangle + traingle on top.
+        // Area of base rectangle + right traingle on the top.
         let area = height*x_diff + 0.5*y_diff*x_diff;
         let centroid = if y_diff == 0.0 {
+            // | - - - - |
+            // |         |
+            // |         |
+            // |         |
+            // | - - - - |
             (x1+x2)/2.0
         } else {
+            // |      -  |
+            // |   / |   |
+            // | -   |   |
+            // |  |  |   |
+            // | - - - - |
             (2.0*x1+x2)/3.0
         };
         a += area*centroid;

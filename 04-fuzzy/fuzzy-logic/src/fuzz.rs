@@ -35,7 +35,7 @@ impl Fuzzer {
         }
     }
 
-    /// Applies rules to given to input and returns calculated FuzzySets.
+    /// Applies rules to input and returns calculated FuzzySets.
     pub fn apply(
         &self,
         values: &HashMap<Category, f64>
@@ -220,8 +220,8 @@ macro_rules! unit {
 // Macro generator for macors.
 macro_rules! make_rule {
     ($d: tt $name:ident, $typ: tt) => {
-        #[allow(unused_macros)]
         #[macro_export]
+        #[allow(unused_macros)]
         macro_rules! $name {
             ($d($d c1:expr=>$d t1:expr),*;$co:expr=>$to:expr) => {
                 $crate::FuzzyRule::$typ(
@@ -232,5 +232,46 @@ macro_rules! make_rule {
         }
     }
 }
+
 make_rule!($ and, And);
 make_rule!($ or, Or);
+
+#[test]
+fn test_macros(
+) -> () {
+    assert_eq!(
+        unit!("loudness" => "quiet"; "change" => "keep"),
+        FuzzyRule::Unit(
+            ("loudness".to_string(), "quiet".to_string()),
+            ("change".to_string(), "keep".to_string())
+        )
+    );
+    assert_eq!(
+        and!("loudness" => "quiet", "tod" => "morning", "param1" => "param2"; "change" => "vol up"),
+        FuzzyRule::And(
+            vec![
+                ("loudness".to_string(), "quiet".to_string()),
+                ("tod".to_string(), "morning".to_string()),
+                ("param1".to_string(), "param2".to_string())
+            ],
+            ("change".to_string(), "vol up".to_string()))
+    );
+    assert_eq!(
+        or!("loudness" => "quiet", "tod" => "morning", "param1" => "param2"; "change" => "vol up"),
+        FuzzyRule::Or(
+            vec![
+                ("loudness".to_string(), "quiet".to_string()),
+                ("tod".to_string(), "morning".to_string()),
+                ("param1".to_string(), "param2".to_string())
+            ],
+            ("change".to_string(), "vol up".to_string()))
+    );
+    assert_eq!(
+        and!("param1" => "param2"; "change" => "vol up"),
+        FuzzyRule::And(
+            vec![
+                ("param1".to_string(), "param2".to_string())
+            ],
+            ("change".to_string(), "vol up".to_string()))
+    );
+}
