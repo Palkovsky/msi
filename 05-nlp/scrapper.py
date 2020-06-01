@@ -87,7 +87,7 @@ if __name__ == "__main__":
     )
 
     with open("dataset.csv", 'w', encoding="utf-8") as fil:
-        writer = csv.writer(fil)
+        writer = csv.writer(fil, delimiter="|")
         for (label, songs) in ((label1, songs1), (label2, songs2)):
             samples = (sample for song in songs for sample in chunks(label, parse(song)))
             writer.writerows(samples)
