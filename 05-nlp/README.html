@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pl" xml:lang="pl">
 <head>
-<!-- 2020-06-01 pon. 01:01 -->
+<!-- 2020-06-01 pon 19:18 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>NLP - raport</title>
@@ -246,12 +246,12 @@ for the JavaScript code in this tag.
 <span class="subtitle">Dawid Macek</span>
 </h1>
 
-<div id="outline-container-orgbdad3ba" class="outline-2">
-<h2 id="orgbdad3ba"><span class="section-number-2">1</span> Wyniki treningu modeli na dostarczonym zbiorze danych.</h2>
+<div id="outline-container-org1fd7bc0" class="outline-2">
+<h2 id="org1fd7bc0"><span class="section-number-2">1</span> Wyniki treningu modeli na dostarczonym zbiorze danych.</h2>
 <div class="outline-text-2" id="text-1">
 </div>
-<div id="outline-container-org3cce2c9" class="outline-3">
-<h3 id="org3cce2c9"><span class="section-number-3">1.1</span> Neuronalny</h3>
+<div id="outline-container-org6822c3f" class="outline-3">
+<h3 id="org6822c3f"><span class="section-number-3">1.1</span> Neuronalny</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 Z domyślnymi parametrami. 
@@ -266,8 +266,8 @@ Osiągnięta dokładność to 90%.
 </div>
 </div>
 
-<div id="outline-container-orge201bda" class="outline-3">
-<h3 id="orge201bda"><span class="section-number-3">1.2</span> Bayesowski</h3>
+<div id="outline-container-org51b2464" class="outline-3">
+<h3 id="org51b2464"><span class="section-number-3">1.2</span> Bayesowski</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 Osiągnięta dokładność to 89%.
@@ -282,8 +282,8 @@ Osiągnięta dokładność to 89%.
 </div>
 </div>
 
-<div id="outline-container-org7efa74c" class="outline-2">
-<h2 id="org7efa74c"><span class="section-number-2">2</span> Wyniki eksperymentów związanych z modyfikacją hiper-parametrów</h2>
+<div id="outline-container-orgdd97d7e" class="outline-2">
+<h2 id="orgdd97d7e"><span class="section-number-2">2</span> Wyniki eksperymentów związanych z modyfikacją hiper-parametrów</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Dla mniejszych batch sizów uruchamiało się za długo.
@@ -298,6 +298,51 @@ Dla mniejszych batch sizów uruchamiało się za długo.
 
 <div class="figure">
 <p><img src="./imgs/3b.png" alt="3b.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org250592d" class="outline-2">
+<h2 id="org250592d"><span class="section-number-2">3</span> Opis zbioru danych wraz z linkiem pozwalającym na jego pobranie</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Wersy z różnych polskich piosenek z następujących gatunków:
+</p>
+<ul class="org-ul">
+<li>disco polo</li>
+<li>hip-hop</li>
+</ul>
+
+<p>
+Link: <a href="https://github.com/Palkovsky/msi/blob/master/05-nlp/dataset.csv">https://github.com/Palkovsky/msi/blob/master/05-nlp/dataset.csv</a>
+W tym samym repo jest również skrypt użyty do stworzenia datasetu.
+Teksty pobierane były z <a href="https://www.tekstowo.pl/">tekstowo.pl</a>.
+</p>
+
+<p>
+Powyższy zbiór danych jest dość trudny, ponieważ disco-polo i polski hip-hop niczym się nie różnią.
+</p>
+
+
+<div class="figure">
+<p><img src="./imgs/4.png" alt="4.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1be754f" class="outline-2">
+<h2 id="org1be754f"><span class="section-number-2">4</span> Wyniki działania modelu dla własnych danych</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+Trenujemy model neuronalny z domyślnymi parametrami(liczba epok=5, wielkość batcha=8).
+Osiągnięta dokładność to 87%.
+</p>
+
+
+<div class="figure">
+<p><img src="./imgs/5.png" alt="5.png" />
 </p>
 </div>
 </div>

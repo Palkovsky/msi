@@ -29,8 +29,20 @@ Dla mniejszych batch sizów uruchamiało się za długo.
 [[./imgs/3b.png]]
 
 * Opis zbioru danych wraz z linkiem pozwalającym na jego pobranie
-  Zwrotki piosenek z dwóch różnych gatunków:
+  Wersy z różnych polskich piosenek z następujących gatunków:
   - disco polo
-  - polski hip-hop
+  - hip-hop
 
-  Powyższy zbiór danych jest dość trudny, ponieważ klasy są słabo rozróżnialne.
+  Link: https://github.com/Palkovsky/msi/blob/master/05-nlp/dataset.csv
+  W tym samym repo jest również skrypt użyty do stworzenia datasetu.
+  Teksty pobierane były z [[https://www.tekstowo.pl/][tekstowo.pl]].
+
+  Powyższy zbiór danych jest dość trudny, ponieważ disco-polo i polski hip-hop niczym się nie różnią.
+
+  [[./imgs/4.png]]
+
+* Wyniki działania modelu dla własnych danych
+  Trenujemy model neuronalny z domyślnymi parametrami(liczba epok=5, wielkość batcha=8).
+  Osiągnięta dokładność to 87%.
+
+  [[./imgs/5.png]]
